@@ -76,10 +76,11 @@ func GetAuthURL(res http.ResponseWriter, req *http.Request) (string, error) {
 		return "", err
 	}
 
-	provider, err := goth.GetProvider(providerName)
+	base, err := goth.GetProvider(providerName)
 	if err != nil {
 		return "", err
 	}
+	provider, _ := base.(goth.Provider)
 	sess, err := provider.BeginAuth(GetState(req))
 	if err != nil {
 		return "", err
@@ -116,10 +117,11 @@ func CompleteUserAuth(res http.ResponseWriter, req *http.Request) (goth.User, er
 		return goth.User{}, err
 	}
 
-	provider, err := goth.GetProvider(providerName)
+	base, err := goth.GetProvider(providerName)
 	if err != nil {
 		return goth.User{}, err
 	}
+	provider, _ := base.(goth.Provider)
 
 	session, _ := Store.Get(req, SessionName)
 
