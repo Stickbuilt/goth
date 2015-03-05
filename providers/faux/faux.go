@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"strings"
 
-	"github.com/markbates/goth"
+	"github.com/stickbuilt/goth"
 )
 
 // Provider is used only for testing.

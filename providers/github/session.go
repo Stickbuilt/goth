@@ -6,7 +6,7 @@ import (
 
 	"golang.org/x/oauth2"
 
-	"github.com/markbates/goth"
+	"github.com/stickbuilt/goth"
 )
 
 // Session stores data during the auth process with Github.

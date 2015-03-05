@@ -1,4 +1,4 @@
-# Goth: Multi-Provider Authentication for Go [![Build Status](https://travis-ci.org/markbates/goth.svg)](https://travis-ci.org/markbates/goth)
+# Goth: Multi-Provider Authentication for Go [![Build Status](https://travis-ci.org/stickbuilt/goth.svg)](https://travis-ci.org/stickbuilt/goth)
 
 Package goth provides a simple, clean, and idiomatic way to write authentication
 packages for Go web applications.
@@ -10,12 +10,12 @@ This package was inspired by [https://github.com/intridea/omniauth](https://gith
 
 ## Docs
 
-The API docs can be found at [http://godoc.org/github.com/markbates/goth](http://godoc.org/github.com/markbates/goth)
+The API docs can be found at [http://godoc.org/github.com/stickbuilt/goth](http://godoc.org/github.com/stickbuilt/goth)
 
 ## Installation
 
 ```text
-$ go get github.com/markbates/goth
+$ go get github.com/stickbuilt/goth
 ```
 
 ## Supported Providers

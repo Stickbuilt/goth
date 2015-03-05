@@ -3,7 +3,7 @@ package spotify
 import (
 	"testing"
 
-	"github.com/markbates/goth"
+	"github.com/stickbuilt/goth"
 	"github.com/stretchr/testify/assert"
 )
 

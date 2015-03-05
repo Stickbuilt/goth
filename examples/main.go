@@ -7,16 +7,16 @@ import (
 	"os"
 
 	"github.com/gorilla/pat"
-	"github.com/markbates/goth"
-	"github.com/markbates/goth/gothic"
-	"github.com/markbates/goth/providers/facebook"
-	"github.com/markbates/goth/providers/github"
-	"github.com/markbates/goth/providers/gplus"
-	"github.com/markbates/goth/providers/lastfm"
-	"github.com/markbates/goth/providers/linkedin"
-	"github.com/markbates/goth/providers/spotify"
-	"github.com/markbates/goth/providers/twitter"
-	)
+	"github.com/stickbuilt/goth"
+	"github.com/stickbuilt/goth/gothic"
+	"github.com/stickbuilt/goth/providers/facebook"
+	"github.com/stickbuilt/goth/providers/github"
+	"github.com/stickbuilt/goth/providers/gplus"
+	"github.com/stickbuilt/goth/providers/lastfm"
+	"github.com/stickbuilt/goth/providers/linkedin"
+	"github.com/stickbuilt/goth/providers/spotify"
+	"github.com/stickbuilt/goth/providers/twitter"
+)
 
 func main() {
 	goth.UseProviders(

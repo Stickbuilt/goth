@@ -6,7 +6,7 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/markbates/goth"
+	"github.com/stickbuilt/goth"
 	"golang.org/x/oauth2"
 	"net/url"
 )

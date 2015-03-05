@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 
-	"github.com/markbates/goth"
+	"github.com/stickbuilt/goth"
 	"golang.org/x/oauth2"
 )
 

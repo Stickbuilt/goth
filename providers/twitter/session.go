@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"errors"
 
-	"github.com/markbates/goth"
 	"github.com/mrjones/oauth"
+	"github.com/stickbuilt/goth"
 )
 
 // Session stores data during the auth process with Twitter.

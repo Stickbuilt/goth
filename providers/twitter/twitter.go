@@ -8,8 +8,8 @@ import (
 	"io/ioutil"
 	"strings"
 
-	"github.com/markbates/goth"
 	"github.com/mrjones/oauth"
+	"github.com/stickbuilt/goth"
 )
 
 var (

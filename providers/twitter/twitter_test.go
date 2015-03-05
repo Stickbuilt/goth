@@ -9,8 +9,8 @@ import (
 	"testing"
 
 	"github.com/gorilla/pat"
-	"github.com/markbates/goth"
 	"github.com/mrjones/oauth"
+	"github.com/stickbuilt/goth"
 	"github.com/stretchr/testify/assert"
 )
 

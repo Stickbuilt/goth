@@ -11,7 +11,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/markbates/goth"
+	"github.com/stickbuilt/goth"
 	"golang.org/x/oauth2"
 )
 
