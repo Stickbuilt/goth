@@ -10,10 +10,10 @@ package gothic
 import (
 	"errors"
 	"fmt"
-	"net/http"
-
+	"github.com/gin-gonic/gin"
 	"github.com/gorilla/sessions"
 	"github.com/stickbuilt/goth"
+	"net/http"
 )
 
 // SessionName is the key used to access the session store.
@@ -41,15 +41,15 @@ for the requested provider.
 
 See https://github.com/stickbuilt/goth/examples/main.go to see this in action.
 */
-func BeginAuthHandler(res http.ResponseWriter, req *http.Request) {
-	url, err := GetAuthURL(res, req)
+func BeginAuthHandler(c *gin.Context) {
+	url, err := GetAuthURL(c)
 	if err != nil {
-		res.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintln(res, err)
+		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, "Invalid request")
 		return
 	}
 
-	http.Redirect(res, req, url, http.StatusTemporaryRedirect)
+	c.Redirect(http.StatusTemporaryRedirect, url)
 }
 
 // GetState gets the state string associated with the given request
@@ -69,9 +69,9 @@ as either "provider" or ":provider".
 I would recommend using the BeginAuthHandler instead of doing all of these steps
 yourself, but that's entirely up to you.
 */
-func GetAuthURL(res http.ResponseWriter, req *http.Request) (string, error) {
+func GetAuthURL(c *gin.Context) (string, error) {
 
-	providerName, err := GetProviderName(req)
+	providerName, err := GetProviderName(c)
 	if err != nil {
 		return "", err
 	}
@@ -81,7 +81,7 @@ func GetAuthURL(res http.ResponseWriter, req *http.Request) (string, error) {
 		return "", err
 	}
 	provider, _ := base.(goth.Provider)
-	sess, err := provider.BeginAuth(GetState(req))
+	sess, err := provider.BeginAuth(GetState(c.Request))
 	if err != nil {
 		return "", err
 	}
@@ -91,9 +91,9 @@ func GetAuthURL(res http.ResponseWriter, req *http.Request) (string, error) {
 		return "", err
 	}
 
-	session, _ := Store.Get(req, SessionName)
+	session, _ := Store.Get(c.Request, SessionName)
 	session.Values[SessionName] = sess.Marshal()
-	err = session.Save(req, res)
+	err = session.Save(c.Request, c.Writer)
 	if err != nil {
 		return "", err
 	}
@@ -110,9 +110,9 @@ as either "provider" or ":provider".
 
 See https://github.com/stickbuilt/goth/examples/main.go to see this in action.
 */
-func CompleteUserAuth(res http.ResponseWriter, req *http.Request) (goth.User, error) {
+func CompleteUserAuth(c *gin.Context) (goth.User, error) {
 
-	providerName, err := GetProviderName(req)
+	providerName, err := GetProviderName(c)
 	if err != nil {
 		return goth.User{}, err
 	}
@@ -123,7 +123,7 @@ func CompleteUserAuth(res http.ResponseWriter, req *http.Request) (goth.User, er
 	}
 	provider, _ := base.(goth.Provider)
 
-	session, _ := Store.Get(req, SessionName)
+	session, _ := Store.Get(c.Request, SessionName)
 
 	if session.Values[SessionName] == nil {
 		return goth.User{}, errors.New("could not find a matching session for this request")
@@ -134,7 +134,7 @@ func CompleteUserAuth(res http.ResponseWriter, req *http.Request) (goth.User, er
 		return goth.User{}, err
 	}
 
-	_, err = sess.Authorize(provider, req.URL.Query())
+	_, err = sess.Authorize(provider, c.Request.URL.Query())
 
 	if err != nil {
 		return goth.User{}, err
@@ -150,11 +150,8 @@ func CompleteUserAuth(res http.ResponseWriter, req *http.Request) (goth.User, er
 // name for your request.
 var GetProviderName = getProviderName
 
-func getProviderName(req *http.Request) (string, error) {
-	provider := req.URL.Query().Get("provider")
-	if provider == "" {
-		provider = req.URL.Query().Get(":provider")
-	}
+func getProviderName(c *gin.Context) (string, error) {
+	provider := c.Params.ByName("provider")
 	if provider == "" {
 		return provider, errors.New("you must select a provider")
 	}
